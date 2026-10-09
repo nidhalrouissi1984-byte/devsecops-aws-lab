@@ -38,10 +38,17 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
 
       - name: Build Docker image
-        run: docker build -t devsecops-aws-lab:latest .
+        run: |
+          docker build -t nidhalrouissi1984/devsecops-aws-lab:latest .
 
       - name: Login to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Push image to Docker Hub
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          docker push nidhalrouissi1984/devsecops-aws-lab:latest

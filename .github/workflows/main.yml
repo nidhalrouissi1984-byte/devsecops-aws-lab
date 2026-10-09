@@ -36,3 +36,6 @@ jobs:
 
       - name: Secret scanning - Gitleaks
         uses: gitleaks/gitleaks-action@v2
+
+      - name: Build Docker image
+        run: docker build -t devsecops-aws-lab:latest .
